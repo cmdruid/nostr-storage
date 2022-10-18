@@ -58,8 +58,8 @@ store
 
 // NostrStore is configurable with some basic options.
 const store = new NostrStore({
-  refreshTimeout: 5000,  // Timeout for refreshing data on a has/get op.
-  commitTimeout: 5000,   // Timeout for comfirming a commit op suceeded.
+  refreshTimeout: 5000,  // Timeout to refresh data before a has/get op.
+  commitTimeout: 5000,   // Timeout on confirming a commit op suceeded.
   emitter: { /* You can also configure the emitter here. */ }
 })
 ```
