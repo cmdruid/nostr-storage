@@ -6,9 +6,9 @@
   <title>NostrStore Demo</title>
   <link rel="stylesheet" href="styles.css">
   <script src='https://bundle.run/noble-secp256k1@1.2.14'></script>
-  <!-- <script src='https://unpkg.com/nostr-emitter'></script> -->
-  <script src="../../../index.js"></script>
-  <script src='../index.js'></script>
+  <script src='https://unpkg.com/nostr-emitter'></script>
+  <script src='https://unpkg.com/nostr-storage'></script>
+  <!-- <script src='../index.js'></script> -->
   <script src='app.js'></script>
 </head>
 <body>
@@ -31,7 +31,7 @@
         <p>Data Store</p>
       </div>
       <div class="content">
-        <pre contenteditable="true">{}</pre>
+        <pre contenteditable="true">{ "example": "replace this with your own JSON data" }</pre>
         <button class="submit-btn">submit</button>
         <button class="clear-btn">clear</button>
       </div>
@@ -41,7 +41,9 @@
     <section>
       <div>
         <p>
-          <a>Github Repo</a> | <a>NPM Package</a> | <a>Nostr</a>
+          <a href="https://github.com/cmdruid/nostr-storage">github-repo</a> | 
+          <a href="https://www.npmjs.com/package/nostr-storage">npm-package</a> | 
+          <a href="https://github.com/cmdruid/nostr-emitter">nostr-emitter</a>
         </p>
       </div>
     </section>

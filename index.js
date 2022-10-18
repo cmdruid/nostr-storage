@@ -13,6 +13,8 @@ class NostrStore {
     commitTimeout: 5000
   }
 
+  static utils = nostrEmitter.utils
+
   static encode(key, value) {
     // Convert non-standard javascript objects to json.
     if (value instanceof Map)
@@ -48,7 +50,7 @@ class NostrStore {
     })
     
     // We need to borrow the hash util from NostrEmitter.
-    this.util = nostrEmitter.utils
+    this.utils = nostrEmitter.utils
 
     this.emitter.on('all', data => {
       // Check that we have data in the proper format.
@@ -75,7 +77,7 @@ class NostrStore {
     // Use the secret for generating the signing key.
     this.emitter.signSecret = secret;
     // Use a hashed version of the secret to encrypt the data.
-    this.emitter.secret = await new this.utils.hash(secret).hex()
+    this.emitter.secret = await new NostrStore.utils.hash(secret).hex()
     // Connect to the relay.
     return this.emitter.connect().then(() => this.connected = this.emitter.connected)
   }
@@ -98,16 +100,17 @@ class NostrStore {
     // Commit our data to the relay.
     const commitId = this.utils.getRandomString(16)
     const encoded = JSON.stringify(this.data, NostrStore.encode)
-    return new Promise((res, rej) => {
-      setTimeout(() => res(false), timeout)
-      this.emitter.witin(commitId, (data) => {
-        console.log(data, encoded)
-        return (data === encoded)
-          ? res(true)
-          : res(false)
-      }, this.opt.commitTimeout) 
-      this.emitter.emit(commitId, encoded)
-    })
+    this.emitter.emit(commitId, encoded)
+  //   return new Promise((res, rej) => {
+  //     setTimeout(() => res(false), this.opt.commitTimeout)
+  //     this.emitter.within(commitId, (data) => {
+  //       console.log(data, encoded)
+  //       return (data === encoded)
+  //         ? res(true)
+  //         : res(false)
+  //     }, this.opt.commitTimeout) 
+  //     this.emitter.emit(commitId, encoded)
+  //   })
   }
 
   async has(key) {

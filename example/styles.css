@@ -4,6 +4,7 @@ body {
   font-size: large;
   font-family: monospace;
   min-width: 400px;
+  margin: 0 auto;
 }
 
 h1, p {
@@ -36,6 +37,10 @@ header {
   padding: 1em;
   margin-bottom:2em;
   background-color: var(--header);
+}
+
+main {
+  padding: 2rem;
 }
 
 section {
