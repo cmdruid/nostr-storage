@@ -19,9 +19,8 @@ import NostrStorage from 'nostr-storage'
 ```
 
 ## How to Use
-To get started, simply provide a relay server and shared secret to use, then run `store.connect()`.
+To get started, define a `new NostrStore()` object, then provide a relay server and shared secret to `store.connect()`. Once connected, the store behaves like a typical localStorage object.
 
-Once connected, the store behaves like a typical localStorage object.
 ```js
 // Declare a new store object.
 const store = new NostrStore()
@@ -32,7 +31,7 @@ await store.connect(
   'secret-string'
 )
 
-// NostrStore exposes a typical Map / localStorage API.
+// NostrStore exposes a basic Map / localStorage API.
 store
   .has('key') => Promise(true || false)
   .get('key') => Promise('value')
@@ -40,7 +39,7 @@ store
   .values()   => [ 'val1', 'val2' ... ]
   .entries()  => [ ['key1', 'val1'], ['key2', 'val2'] ... ]
 
-// You can also use NostrStore in an iterator.
+// You can use NostrStore in an iterator.
 for (let [ key, val ] of store) {
   console.log(key, val)
 }
@@ -53,13 +52,13 @@ store
 
 // These methods assist with data fetching under the hood.
 store
-  .refresh()  // Fetch the latest copy from the relay.
-  .commit()   // Commit the current store to the relay.
+  .refresh()  // Fetch the latest copy of data from the relay.
+  .commit()   // Commit the current data store to the relay.
 
 // NostrStore is configurable with some basic options.
 const store = new NostrStore({
-  refreshInterval: 5000,
-  commitTimeout: 5000,
+  refreshTimeout: 5000,  // Timeout for refreshing data on a has/get op.
+  commitTimeout: 5000,   // Timeout for comfirming a commit op suceeded.
   emitter: { /* You can also configure the emitter here. */ }
 })
 ```

@@ -9,8 +9,14 @@ class NostrStore {
 
   static DEFAULT_OPT = {
     emitter: {}, 
-    refreshInterval: 5000,
+    refreshTimeout: 5000,
     commitTimeout: 5000
+  }
+
+  static DEFAULT_EMIT_OPT = {
+    kind: 10001,   // Replaceable events.
+    since: null,   // We want all historical events.
+    selfPub: true, // We want our own events.
   }
 
   static utils = nostrEmitter.utils
@@ -34,24 +40,23 @@ class NostrStore {
   }
 
   constructor(opt = {}) {
+    // Configure our store object.
     this.data = new Map()
     this.init = false
     this.connected = false
     this.opt  = { ...NostrStore.DEFAULT_OPT, ...opt }
     this.log  = str => (opt.log) ? opt.log(str) : console.log(str)
 
-
+    // Configure our underlying emitter object.
     this.emitter = new nostrEmitter({
-      kind: 10001,   // Replaceable events.
-      since: null,   // We want all historical events.
-      selfPub: true, // We want our own events.
-      // Pass along options to the emitter.
+      ...NostrStore.DEFAULT_EMIT_OPT,
       ...this.opt.emitter
     })
     
-    // We need to borrow the hash util from NostrEmitter.
+    // We need to borrow some utils from NostrEmitter.
     this.utils = nostrEmitter.utils
 
+    // Our main event handler.
     this.emitter.on('all', data => {
       // Check that we have data in the proper format.
       if (data && typeof data === 'string') {
@@ -84,8 +89,8 @@ class NostrStore {
 
   hasExpired() {
     // Check if our data store has expired.
-    const { refreshInterval } = this.opt
-    const expired = (now() - this.lastUpdate) > refreshInterval
+    const { refreshTimeout } = this.opt
+    const expired = (now() - this.lastUpdate) > refreshTimeout
     return expired
   }
 
@@ -98,19 +103,18 @@ class NostrStore {
 
   async commit() {
     // Commit our data to the relay.
+    const { commitTimeout } = this.opt
     const commitId = this.utils.getRandomString(16)
     const encoded = JSON.stringify(this.data, NostrStore.encode)
-    this.emitter.emit(commitId, encoded)
-  //   return new Promise((res, rej) => {
-  //     setTimeout(() => res(false), this.opt.commitTimeout)
-  //     this.emitter.within(commitId, (data) => {
-  //       console.log(data, encoded)
-  //       return (data === encoded)
-  //         ? res(true)
-  //         : res(false)
-  //     }, this.opt.commitTimeout) 
-  //     this.emitter.emit(commitId, encoded)
-  //   })
+    return new Promise((res, rej) => {
+      setTimeout(() => res(null), commitTimeout)
+      this.emitter.within(commitId, (data) => {
+        return (data === encoded)
+          ? res(this.data)
+          : res(null)
+      }, commitTimeout) 
+      this.emitter.emit(commitId, encoded)
+    })
   }
 
   async has(key) {
@@ -123,20 +127,20 @@ class NostrStore {
     return this.data.get(key)
   }
 
-  set(key, value) {
+  async set(key, value) {
     if (this.data.get(key) === value) {
-      return value
+      return this.data
     }
     this.data.set(key, value)
     return this.commit()
   }
 
-  delete() {
-    this.data.delete(key, value)
+  async delete(key) {
+    this.data.delete(key)
     return this.commit()
   }
 
-  clear() {
+  async clear() {
     this.data = new Map()
     return this.commit()
   }

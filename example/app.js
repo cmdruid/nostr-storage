@@ -39,10 +39,11 @@ async function getData() {
   return await store.get('content')
 }
 
-function setData(data) {
+async function setData(data) {
   // Setter function for the store.
   if (window.global.isValidJSON) {
-    store.set('content', data)
+    return store.set('content', data)
+      .then(res => console.log('setData:', res))
   }
 }
 

@@ -66,10 +66,6 @@
       handleValidation(e.target.textContent)
     })
 
-    dEditor.addEventListener('keypress', e => {
-      if (e.key === 'Enter') setData(e.target.textContent)
-    })
-
     dSubmit.addEventListener('click', e => {
       setData(dEditor.textContent)
     })
@@ -87,14 +83,15 @@
     }
 
     async function updateEditor() {
-      dEditor.textContent = await getData()
+      const content = await getData()
+      dEditor.textContent = content
       handleValidation(dEditor.textContent)
     }
 
     const storeEmitter = getEmitter()
     const savedString = localStorage.getItem('connectString')
     
-    storeEmitter.on('store', (data) => {
+    storeEmitter.on('all', (data) => {
       console.log('store:', data)
       updateEditor()
     })
