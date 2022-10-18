@@ -1,5 +1,5 @@
 # nostr-storage
-A shared, encrypted cloud storage using Nostr.
+A shared, encrypted cloud data store using Nostr.
 
 ## Installation
 This package is designed to work in both the browser and nodejs.
