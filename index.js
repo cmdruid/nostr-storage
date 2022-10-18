@@ -42,6 +42,7 @@ class NostrStore {
   constructor(opt = {}) {
     // Configure our store object.
     this.data = new Map()
+    this.storeId = null
     this.init = false
     this.connected = false
     this.opt  = { ...NostrStore.DEFAULT_OPT, ...opt }
@@ -57,10 +58,12 @@ class NostrStore {
     this.utils = nostrEmitter.utils
 
     // Our main event handler.
-    this.emitter.on('all', data => {
+    this.emitter.on('all', (data, meta) => {
       // Check that we have data in the proper format.
+      console.log('data:', data, meta)
       if (data && typeof data === 'string') {
         this.data = JSON.parse(data, NostrStore.decode)
+        this.storeId = meta.id
       }
       // Else, check if we need to initialize.
       else if (!this.init) {
@@ -143,6 +146,18 @@ class NostrStore {
   async clear() {
     this.data = new Map()
     return this.commit()
+  }
+
+  async destroy() {
+    await this.refresh()
+    if (this.storeId) {
+      this.emitter.emit('destroy', '', {
+        kind: 5,
+        tags: [['e', this.storeId ]]
+      })
+    }
+    this.data = new Map()
+    return null
   }
 
   keys() {

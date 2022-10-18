@@ -5,19 +5,16 @@ window.global = {
 const store = new NostrStore()
 
 async function connect(str) {
-  // Save the connection string to local storage.
-  localStorage.setItem('connectString', str)
+  // Try decoding the string.
+  str = (str.includes('@'))
+    ? str
+    : str = atob(str)
 
-  // If no separator exists, try decoding the string.
-  str = (!str.includes(':'))
-    ? str = atob(str)
-    : str
-  
   // Split the decoded connection string.
-  const [ relayUrl, secret ] = str.split(':')
+  const [ secret, relayUrl ] = str.split('@')
   
   // Connect to the relay.
-  await store.connect('wss://' + relayUrl, secret)
+  await store.connect(relayUrl, secret)
 }
 
 function isValidJSON(data) {
@@ -49,5 +46,5 @@ async function setData(data) {
 
 function clearData() {
   // Clear function for the store.
-  store.set('content', '{}')
+  store.destroy()
 }

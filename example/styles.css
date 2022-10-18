@@ -22,8 +22,9 @@ input {
   width: 100%;
   border: none;
   background-color: transparent;
-  color: transparent;
-  text-shadow: 0 0 0 whitesmoke;
+  color: var(--content);
+  /* text-shadow: 0 0 0 whitesmoke; */
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -39,6 +40,10 @@ header {
   background-color: var(--header);
 }
 
+header p {
+  line-height: 1.5rem;
+}
+
 main {
   padding: 2rem;
 }
@@ -47,6 +52,11 @@ section {
   margin: 0 auto;
   margin-bottom: 2em;
   max-width: 60em;
+}
+
+section .desc {
+  text-align: left;
+  padding: 0 3rem;
 }
 
 button {

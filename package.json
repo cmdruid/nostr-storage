@@ -7,6 +7,6 @@
   "author": "Christopher Scott",
   "license": "MIT",
   "dependencies": {
-    "nostr-emitter": "^1.0.19"
+    "nostr-emitter": "^1.1.2"
   }
 }

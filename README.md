@@ -54,6 +54,7 @@ store
 store
   .refresh()  // Fetch the latest copy of data from the relay.
   .commit()   // Commit the current data store to the relay.
+  .destroy()  // Marks the data store for deletion (using NIP 9).
 
 // NostrStore is configurable with some basic options.
 const store = new NostrStore({
