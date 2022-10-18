@@ -60,7 +60,6 @@ class NostrStore {
     // Our main event handler.
     this.emitter.on('all', (data, meta) => {
       // Check that we have data in the proper format.
-      console.log('data:', data, meta)
       if (data && typeof data === 'string') {
         this.data = JSON.parse(data, NostrStore.decode)
         this.storeId = meta.id

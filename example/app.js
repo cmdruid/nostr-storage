@@ -40,7 +40,6 @@ async function setData(data) {
   // Setter function for the store.
   if (window.global.isValidJSON) {
     return store.set('content', data)
-      .then(res => console.log('setData:', res))
   }
 }
 
