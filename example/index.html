@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NostrStore Demo</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src='https://bundle.run/noble-secp256k1@1.2.14'></script>
+  <!-- <script src='https://unpkg.com/nostr-emitter'></script> -->
+  <script src="../../../index.js"></script>
+  <script src='../index.js'></script>
+  <script src='app.js'></script>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>NostrStore</h1>
+      <p>Collaborate on a shared data store.</p>
+    </div>
+  </header>
+  <main>
+    <section class="connect-window">
+      <pre>Copy / paste a connection string:</pre>
+      <div class="connect-prompt">
+        <input/>
+        <button class="connect-btn">connect</button>
+      </div>
+    </section>
+    <section class="container">
+      <div class="title">
+        <p>Data Store</p>
+      </div>
+      <div class="content">
+        <pre contenteditable="true">{}</pre>
+        <button class="submit-btn">submit</button>
+        <button class="clear-btn">clear</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <section>
+      <div>
+        <p>
+          <a>Github Repo</a> | <a>NPM Package</a> | <a>Nostr</a>
+        </p>
+      </div>
+    </section>
+  </footer>
+  <script>
+
+    const cInput  = document.querySelector('.connect-prompt input')
+    const cButton = document.querySelector('.connect-btn')
+    const dEditor = document.querySelector('.content pre')
+    const dSubmit = document.querySelector('.content .submit-btn')
+    const dClear  = document.querySelector('.content .clear-btn')
+
+    cInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') connect(e.target.value)
+    })
+
+    cButton.addEventListener('click', e => connect(cInput.value))
+
+    dEditor.addEventListener('input', (e) => {
+      handleValidation(e.target.textContent)
+    })
+
+    dEditor.addEventListener('keypress', e => {
+      if (e.key === 'Enter') setData(e.target.textContent)
+    })
+
+    dSubmit.addEventListener('click', e => {
+      setData(dEditor.textContent)
+    })
+
+    dClear.addEventListener('click', e => clearData())
+
+    function handleValidation(data) {
+      if (isValidJSON(data)) {
+        dEditor.style.backgroundColor = 'rgba(0, 128, 0, 0.1)'
+        window.global.isValidJSON = true
+      } else {
+        dEditor.style.backgroundColor = 'rgba(128, 0, 0, 0.1)'
+        window.global.isValidJSON = false
+      }
+    }
+
+    async function updateEditor() {
+      dEditor.textContent = await getData()
+      handleValidation(dEditor.textContent)
+    }
+
+    const storeEmitter = getEmitter()
+    const savedString = localStorage.getItem('connectString')
+    
+    storeEmitter.on('store', (data) => {
+      console.log('store:', data)
+      updateEditor()
+    })
+
+    if (savedString) {
+      cInput.setAttribute('value', savedString)
+      connect(savedString).then(() => updateEditor())
+    }
+  </script>
+</body>
+</html>

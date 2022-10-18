@@ -1,0 +1,12 @@
+{
+  "name": "nostr-storage",
+  "version": "1.0.1",
+  "description": "A shared, encrypted cloud storage using Nostr.",
+  "main": "index.js",
+  "repository": "https://github.com/cmdruid/nostr-storage.git",
+  "author": "Christopher Scott",
+  "license": "MIT",
+  "dependencies": {
+    "nostr-emitter": "^1.0.17"
+  }
+}

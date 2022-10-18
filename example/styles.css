@@ -1,0 +1,146 @@
+body {
+  background-color: var(--background);
+  color: var(--content);
+  font-size: large;
+  font-family: monospace;
+  min-width: 400px;
+}
+
+h1, p {
+  text-align: center;
+  padding: 0 0.5rem 0 0.5rem;
+}
+
+pre {
+  margin: 0;
+  white-space: pre-wrap
+}
+
+input {
+  flex-grow: 1;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 0 whitesmoke;
+  font-weight: bold;
+}
+
+input:focus {
+  outline: none;
+}
+
+header {
+  text-align: center;
+  margin: 0 auto;
+  padding: 1em;
+  margin-bottom:2em;
+  background-color: var(--header);
+}
+
+section {
+  margin: 0 auto;
+  margin-bottom: 2em;
+  max-width: 60em;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  min-width: 8rem;
+  height: 2rem;
+  font-size: large;
+  font-family: monospace;
+  font-weight: bold;
+  color: var(--content);
+  background-color: var(--button);
+  text-align: center;
+}
+
+button::before {
+  content: '[ ';
+}
+
+button::after {
+  content: ' ]'
+}
+
+button:active {
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
+}
+
+.connect-window pre {
+  text-align: center;
+}
+
+.connect-prompt {
+  border: 1px dashed var(--content);
+  margin-top: 0.5rem;
+  padding: 0.25rem;
+  display: flex;
+}
+
+/* .connect-prompt input {
+  font-size: normal;
+  font-weight: normal;
+} */
+
+.container {
+  border: 1px solid var(--border);
+}
+
+.container .content {
+  text-align: center;
+  /* margin-top: 0.5rem; */
+}
+
+.container .title {
+  width: 100%;
+  background-color: var(--header);
+  border-bottom: 1px solid purple;
+  display: flex;
+  flex-direction: column;
+}
+
+/* .title {
+  margin: 0 auto;
+} */
+
+.title p {
+  font-weight: bold;
+  color: var(--title);
+  height: 0.25rem;
+  line-height: 0.25rem;
+}
+
+.hide {
+  display: none;
+}
+
+.content {
+  height: 100%;
+  color: var(--content);
+  padding: 1rem;
+}
+
+.content pre {
+  min-height: 10rem;
+  text-align: left;
+  background-color: var(--header);
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.clear-btn {
+  background-color: rgba(255, 0, 0, 0.651);
+}
+
+:root {
+  --background: #21222b;
+  --header: #282a35;
+  --border: #8b8b8b86;
+  --title: rgb(96, 192, 101);
+  --content: whitesmoke;
+  --button: #88d441a9;
+}
