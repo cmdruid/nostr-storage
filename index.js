@@ -149,13 +149,13 @@ class NostrStore {
 
   async destroy() {
     await this.refresh()
+    await this.clear()
     if (this.storeId) {
       this.emitter.emit('destroy', '', {
         kind: 5,
         tags: [['e', this.storeId ]]
       })
     }
-    this.data = new Map()
     return null
   }
 

@@ -1,12 +1,21 @@
 {
   "name": "nostr-storage",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A shared, encrypted cloud storage using Nostr.",
   "main": "index.js",
-  "repository": "https://github.com/cmdruid/nostr-storage.git",
   "author": "Christopher Scott",
-  "license": "MIT",
+  "license": "CC-BY-1.0",
+  "repository": "https://github.com/cmdruid/nostr-storage.git",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
   "dependencies": {
-    "nostr-emitter": "^1.1.2"
-  }
+    "nostr-emitter": "^1.1.7"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
 }

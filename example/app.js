@@ -2,7 +2,7 @@ window.global = {
   isValidJSON: false 
 }
 
-const store = new NostrStore()
+const store = new NostrStore({ emitter: { verbose: true }})
 
 async function connect(str) {
   // Try decoding the string.
