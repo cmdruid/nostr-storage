@@ -1,6 +1,6 @@
 {
-  "name": "nostr-storage",
-  "version": "1.0.6",
+  "name": "@cmdcode/nostr-storage",
+  "version": "1.0.7",
   "description": "A shared, encrypted cloud storage using Nostr.",
   "main": "index.js",
   "author": "Christopher Scott",
@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "nostr-emitter": "^1.1.7"
+    "@cmdcode/nostr-emitter": "^1.1.8"
   },
   "files": [
     "index.js",
