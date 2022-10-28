@@ -1,7 +1,7 @@
 // Import our required packages.
 const nostrEmitter = (typeof window !== 'undefined')
   ? window.NostrEmitter
-  : require('nostr-emitter')
+  : require('@cmdcode/nostr-emitter')
 
 const now = () => Math.floor(Date.now() / 1000)
 
