@@ -7,15 +7,15 @@ This package is designed to work in both the browser and nodejs.
 ```html
 <!-- Browser import -->
 <script src='https://bundle.run/noble-secp256k1@1.2.14'></script>
-<script src="https://unpkg.com/nostr-emitter"></script>
-<script src="https://unpkg.com/nostr-storage"></script>
+<script src="https://unpkg.com/@cmdcode/nostr-emitter"></script>
+<script src="https://unpkg.com/@cmdcode/nostr-storage"></script>
 ```
 
 ```js
 // Commonjs import.
-const NostrStorage = require('nostr-storage')
+const NostrStorage = require('@cmdcode/nostr-storage')
 // ES6 import.
-import NostrStorage from 'nostr-storage'
+import NostrStorage from '@cmdcode/nostr-storage'
 ```
 
 ## How to Use
