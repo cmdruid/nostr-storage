@@ -89,14 +89,13 @@ class NostrStore {
   hasExpired() {
     // Check if our data store has expired.
     const { refreshTimeout } = this.opt
-    const expired = (now() - this.lastUpdate) > refreshTimeout
-    return expired
+    return (now() - this.lastUpdate) > refreshTimeout
   }
 
   async refresh() {
     // If the data is stale, resub to the relay.
     if (this.hasExpired()) {
-      this.emitter.subscribe()
+      await this.emitter.subscribe()
     }
   }
 

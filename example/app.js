@@ -33,7 +33,7 @@ function getEmitter() {
 
 async function getData() {
   // Getter function for the store.
-  return await store.get('content')
+  return store.get('content')
 }
 
 async function setData(data) {

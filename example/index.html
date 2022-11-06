@@ -6,9 +6,9 @@
   <title>NostrStore Demo</title>
   <link rel="stylesheet" href="styles.css">
   <script src='https://bundle.run/noble-secp256k1@1.2.14'></script>
-  <script src='https://unpkg.com/@cmdcode/nostr-emitter'></script>
-  <script src='https://unpkg.com/@cmdcode/nostr-storage'></script>
-  <!-- <script src='../index.js'></script> -->
+  <script src='https://unpkg.com/@cmdcode/nostr-emitter@1.1.15'></script>
+  <!-- <script src='https://unpkg.com/@cmdcode/nostr-storage'></script> -->
+  <script src='../index.js'></script>
   <script src='app.js'></script>
 </head>
 <body>
@@ -70,7 +70,7 @@
       if (e.key === 'Enter') await handleConnect(e.target.value)
     })
 
-    cButton.addEventListener('click', async e => await handleConnect(cInput.value))
+    cButton.addEventListener('click', async e => handleConnect(cInput.value))
 
     dEditor.addEventListener('input', (e) => {
       handleValidation(e.target.textContent)
@@ -121,7 +121,6 @@
     const storeEmitter = getEmitter()
 
     storeEmitter.on('all', (data) => {
-      console.log('store:', data)
       updateEditor()
     })
 
