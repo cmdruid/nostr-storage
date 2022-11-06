@@ -11,7 +11,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@cmdcode/nostr-emitter": "^1.1.8"
+    "@cmdcode/nostr-emitter": "^1.1.14"
   },
   "files": [
     "index.js",

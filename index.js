@@ -5,7 +5,7 @@ const nostrEmitter = (typeof window !== 'undefined')
 
 const now = () => Math.floor(Date.now() / 1000)
 
-const { Hash, getRandomString } = nostrEmitter.utils
+// const { Hash, getRandomString } = nostrEmitter.utils
 
 class NostrStore {
 
