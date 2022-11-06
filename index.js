@@ -5,6 +5,8 @@ const nostrEmitter = (typeof window !== 'undefined')
 
 const now = () => Math.floor(Date.now() / 1000)
 
+const { Hash, getRandomString } = nostrEmitter.utils
+
 class NostrStore {
 
   static DEFAULT_OPT = {
@@ -18,8 +20,6 @@ class NostrStore {
     since: null,   // We want all historical events.
     selfPub: true, // We want our own events.
   }
-
-  static utils = nostrEmitter.utils
 
   static encode(key, value) {
     // Convert non-standard javascript objects to json.
@@ -53,9 +53,6 @@ class NostrStore {
       ...NostrStore.DEFAULT_EMIT_OPT,
       ...this.opt.emitter
     })
-    
-    // We need to borrow some utils from NostrEmitter.
-    this.utils = nostrEmitter.utils
 
     // Our main event handler.
     this.emitter.on('all', (data, meta) => {
@@ -84,7 +81,7 @@ class NostrStore {
     // Use the secret for generating the signing key.
     this.emitter.signSecret = secret;
     // Use a hashed version of the secret to encrypt the data.
-    this.emitter.secret = await new NostrStore.utils.hash(secret).hex()
+    this.emitter.secret = await Hash.from(secret).toHex()
     // Connect to the relay.
     return this.emitter.connect().then(() => this.connected = this.emitter.connected)
   }
@@ -106,7 +103,7 @@ class NostrStore {
   async commit() {
     // Commit our data to the relay.
     const { commitTimeout } = this.opt
-    const commitId = this.utils.getRandomString(16)
+    const commitId = getRandomString(16)
     const encoded = JSON.stringify(this.data, NostrStore.encode)
     return new Promise((res, rej) => {
       setTimeout(() => res(null), commitTimeout)
